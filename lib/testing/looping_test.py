@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
-
-from looping import happy_new_year, square_integers, fizzbuzz
+# lib/testing/looping_test.py
 
 import io
 import sys
+import pytest
+from looping import happy_new_year, square_integers, fizzbuzz
 
 class TestHappyNewYear:
     '''happy_new_year() in looping.py'''
@@ -16,11 +16,11 @@ class TestHappyNewYear:
         sys.stdout = sys.__stdout__
         answer = captured_out.getvalue()
         
-        #answer.split(\n) produces a list that ends in ''
+        # answer.split(\n) produces a list that ends in ''
         answer_list = answer.split('\n')
-        #second to last value should be the HNY string
+        # second to last value should be the HNY string
         assert answer_list[-2] == "Happy New Year!", "Your final line does not match 'Happy New Year!', check spelling/capitalization!"
-        digit_strings = [str(i) for i in range(1,11)]
+        digit_strings = [str(i) for i in range(1, 11)]
         remaining_digits = [i for i in digit_strings if i not in answer_list] 
         assert remaining_digits == [], f"You didn't print all digits 1-10, missing {', '.join(remaining_digits)}"
 
@@ -47,12 +47,16 @@ class TestFizzBuzz:
         assert "Buzz" in answer, "The string 'Buzz' not found in your answer, check spelling/capitalization!"
         i = 1
         for line in answer.split('\n'):
-            if(line): #answer.split(\n) produces a list that ends in ''
-                if i % 15 == 0: assert line == "FizzBuzz", f"Should have printed 'Buzz' when number is {i}, got {line} instead"
-                elif i % 3 == 0: assert line == "Fizz", f"Should have printed 'Fizz' when number is {i}, got {line} instead"
-                elif i % 5 == 0: assert line == "Buzz", f"Should have printed 'Buzz' when number is {i}, got {line} instead"
-                else: assert str(i) == line, f"Should have printed {i}, got {line} instead"
+            if line:  # answer.split(\n) produces a list that ends in ''
+                if i % 15 == 0:
+                    assert line == "FizzBuzz", f"Should have printed 'FizzBuzz' when number is {i}, got {line} instead"
+                elif i % 3 == 0:
+                    assert line == "Fizz", f"Should have printed 'Fizz' when number is {i}, got {line} instead"
+                elif i % 5 == 0:
+                    assert line == "Buzz", f"Should have printed 'Buzz' when number is {i}, got {line} instead"
+                else:
+                    assert str(i) == line, f"Should have printed {i}, got {line} instead"
                 i += 1
         
         i = i - 1
-        assert i == 100, f"Only looped {i} times, should have looped 100 times. Check your loop condition!"    
+        assert i == 100, f"Only looped {i} times, should have looped 100 times. Check your loop condition!"
